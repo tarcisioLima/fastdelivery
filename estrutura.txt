@@ -1,0 +1,11 @@
+PAINEL DE CONTROLE
+	> CADASTRAR MOTORISTA / REMOVER
+	> CADASTRAR VEICULO
+	> VISUALIZAR PEDIDOS / USUARIOS
+	> DEFINIR TAXA DE SERVIÇO	
+MAPA
+SAIR
+
+https://fastdelivery-tarcisiolima.c9users.io/
+http://localhost:83/fastdelivery/precosMedidas/precoMedidas.php
+https://getbootstrap.com/components/#dropdowns

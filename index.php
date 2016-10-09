@@ -74,11 +74,11 @@
 			include "router.php";
 			$roteador = new Router();
 			$roteador->novaRota('/','index');
-			$roteador->novaRota('/primeiro','Primeiro');
+			$roteador->novaRota('/painelControle','Painel de Controle');
 			#$roteador->mapa();
 			$roteador->rotear();
  ?>
 </body>
 </html>
 
-
+'

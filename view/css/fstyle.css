@@ -1,4 +1,4 @@
-/* Fast Delivery Styles */
+/* Fast Delivery Index Style */
 
 #login-video{   
    position: fixed;
@@ -29,9 +29,9 @@ form label{
 	background-color: #F7F618;		
 	text-shadow: 2px 2px #000;
 	outline: none; 
-s
+
 }
 #login-form .btn-primary:hover{
 	transition: 1s;
 	filter: contrast(200%);
-};
+}
