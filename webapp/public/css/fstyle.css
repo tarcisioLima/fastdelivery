@@ -1,0 +1,47 @@
+/* Fast Delivery Index Style */
+
+#login-video{   
+   position: fixed;
+   min-width: 100%;
+   min-height: 100%;   
+   z-index: -100;
+   /*filter: contrast(80%);  ESSA COR: #F7F618*/
+}
+body{
+	/*font-family: 'Ubuntu', sans-serif;*/
+	/*font-family: 'Droid Serif', serif;*/
+}
+#logo img{
+	margin: 0 auto;
+}
+
+#centraliza{
+	margin: 0 auto !important;
+   float: none !important;
+   background-color: rgba(255,255,255, 0.8);
+   border-radius: 5%;
+}
+
+form [type=text], [type=password]{
+	background-color:rgba(255,255,255, 0.5)
+}
+
+#login-form{
+	padding: 10%;
+}
+
+#login-form .form-control:focus{
+	  outline:none;
+	  border-color: rgba(0,0,0,0.7) !important;
+}
+#login-form .btn-primary{
+	outline: none; 
+	border:none;
+	color:black;
+	background-color: #f7f718;
+
+}
+#login-form .btn-primary:hover{
+	transition: 1s;
+	filter: contrast(200%);
+}
