@@ -10,8 +10,7 @@ define ('DOOR_CON'  , 3306);
 
 class DataBase{
     public static function getConn(){
-        return mysqli_connect(IP_CON, LOG_CON, PASSW_CON, DB_CON, DOOR_CON);        
+        return mysqli_connect(IP_CON, LOG_CON, PASSW_CON, DB_CON, DOOR_CON);
     }
 }
-
 ?>
