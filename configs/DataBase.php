@@ -1,5 +1,7 @@
 <?php
-
-# https://fastdelivery-tarcisiolima.c9users.io/phpmyadmin
-
+class Connection{
+    public static function getConn($ip, $login, $pass, $db, $porta){
+        return mysqli_connect($ip, $login, $pass, $db, $porta);        
+    }
+}
 ?>
