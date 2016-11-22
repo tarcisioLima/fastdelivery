@@ -8,6 +8,7 @@
 		"/"			   => "LoginController",
 		"/motorista"   => "MotoristaController",
 		"/veiculo"     => "VeiculoController"
+	
 	];
 	
 	foreach($routes as $url => $controller){
