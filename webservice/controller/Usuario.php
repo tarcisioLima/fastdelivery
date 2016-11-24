@@ -1,6 +1,6 @@
 <?php
     interface Usuario{
-        function logar();
-        function deslogar($id);
+        public function logar();
+        public function deslogar($id);
     }
 ?>

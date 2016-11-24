@@ -6,14 +6,14 @@ class Cliente extends DAO{
     public function __construct(){parent::__construct();}
     
     public function inserir($obj){
-        $stmt = $this->conn->prepare("INSERT INTO tb_login(ds_celular,ds_senha) VALUES(?,?)") or die("2".$conn->error);
-        $stmt->bind_param("ss",$obj->login,$obj->senha) or die("3".$stmt->error);
-        $stmt->execute() or die("4".$stmt->error);
-        if($stmt->errorno == 1062){
-            echo "Usuario já existe";
-        } else {
-            echo "Cadastrado, boy";
-        }
+        $stmt = $this->conn->prepare("INSERT INTO tb_login(ds_celular,ds_senha) VALUES(?,?)") or die($this->res400(1, "Erro interno"));
+        $stmt->bind_param("ss",$obj->telefone,$obj->senha) or die($this->res400(2, "Erro interno"));
+        $stmt->execute() or die($stmt->errno == 
+        ? $this->res400(3,"Usuario ja existe") : "");
+        $stmt2 = $this->conn->prepare("INSERT INTO tb_cliente(nm_cliente,ds_comprovante,cd_login) VALUES(?,?,?)") or die($this->res400(4, "Erro interno"));
+        $stmt2->bind_param("ssi",$obj->nome,$obj->comprovante,$stmt->insert_id) or die($this->res400(5, "Erro interno"));
+        $stmt2->execute() or die($this->res400(6, "Erro interno"));
+        echo $this->res200(1,"Cadastrado com sucesso",null);
     }
     
     public function buscar($id){
