@@ -5,10 +5,10 @@
 	
 	# Novas Rotas 
 	$routes = [
-		"/"			   => "LoginController",
-		"/motorista"   => "MotoristaController",
-		"/veiculo"     => "VeiculoController"
-	
+		"/"			      => "LoginController",
+		"/motorista"      => "MotoristaController",
+		"/veiculo"  	  => "VeiculoController",
+		"/veiculo/listv"  => "ListVeiculoController"
 	];
 	
 	foreach($routes as $url => $controller){
