@@ -9,15 +9,15 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Meus Imports -->
-	<link rel="stylesheet" href="webapp/view/css/painel.css">
-	<script type="text/javascript" src="webapp/public/js/fcodes.js"></script>
+	<link rel="stylesheet" href="webapp/public/css/painel.css">
+	<script type="text/javascript" src="webapp/public/js/veiculo.js"></script>
 </head>
 <body>
     <!-- Menu de Navegação -->
     <nav class="nav navbar-inverse navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/motorista">
+                <a class="navbar-brand" href="/motorista" style="padding: 0;">
                     <img alt="Logo" class="img-responsive" src="webapp/public/img/minilogo.png">
                 </a>
             </div>
@@ -46,13 +46,71 @@
             </ul>
         </div>
     </nav>
-        <section class="container panel panel-default">
-       <div class="panel-heading"> Cadastrar Motorista </div>
-       <div class="panel-body">
-           
+    <!--https://fastdelivery-tarcisiolima.c9users.io/phpmyadmin/-->
+       <section class="container panel panel-default">
+       <div class="panel-heading"> Cadastrar Veiculo </div>
+           <div class="panel-body">
+            <div class="row-fluid"> 
+                 <form class="form-horizontal" id="form-veiculo">
+                    <div class="form-group">
+					<label class="control-label col-sm-1" for="placa">Placa</label>
+					<div class="col-sm-5">
+					 	<input type="text" class="form-control" id="placa" placeholder="Digite a placa do veiculo"  maxlength="7" minlength="7" required>
+					 </div>
+					</div>
+					
+					<div class="form-group">
+					<label class="control-label col-sm-1" for="modelo">Modelo</label>
+					<div class="col-sm-5">
+					 	<input type="text" class="form-control" id="modelo" placeholder="Descreva o modelo do veiculo"  maxlength="40" minlength="4" required>
+					 </div>
+					</div>
+					
+					<div class="form-group">
+					<label class="control-label col-sm-1" for="cor">Cor</label>
+					<div class="col-sm-5">
+					 	<input type="text" class="form-control" id="cor" placeholder="Digite a cor veiculo"  maxlength="20" minlength="4" required>
+					 </div>
+					</div>
+					<div class="form-group">
+					    
+				    <label class="control-label col-sm-1">Dono</label>
+				    <div class="col-sm-5">
+        				<label class="radio-inline"><input type="radio" name="prop" value="1" checked>Empresa</label>
+                        <label class="radio-inline"><input type="radio" name="prop" value="0">Pessoal</label>
+                    </div>
+                    <br><br>
+				</div>
+					<div class="form-group"> 
+                    <div class="col-sm-offset-1 col-sm-5">
+                      <button type="submit" class="btn btn-primary" >enviar
+                      <span class="glyphicon glyphicon-send"></span></button>
+                      <button type="reset" class="btn btn-danger">limpar
+                      <span class="glyphicon glyphicon-erase"></span></button>
+                    </div>
+                </div>
+			</form>
+            
         </div>
+    </div>
     </section>
-    
-    
+    <!-- Modal de Cadastro -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
+					</div>
+					<div class="modal-body" id="corpo-modal"></div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>					
+					</div>
+					</div>
+			</div>
+		</div>
+<!-- Fim Modal -->
 </body>
 </html>
