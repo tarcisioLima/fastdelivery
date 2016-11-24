@@ -26,22 +26,22 @@ form [type=text], [type=password]{
 	background-color:rgba(255,255,255, 0.5)
 }
 
-#login-form{
+#form-login{
 	padding: 10%;
 }
 
-#login-form .form-control:focus{
+#form-login .form-control:focus{
 	  outline:none;
 	  border-color: rgba(0,0,0,0.7) !important;
 }
-#login-form .btn-primary{
+#form-login .btn-primary{
 	outline: none; 
 	border:none;
 	color:black;
 	background-color: #f7f718;
 
 }
-#login-form .btn-primary:hover{
+#form-login .btn-primary:hover{
 	transition: 1s;
 	filter: contrast(200%);
 }

@@ -39,7 +39,7 @@ $(document).ready(function(){
                 idVeiculo:  $("#veiculo").val()
             };
             //Ajax Request
-            $.post("https://fastdelivery-tarcisiolima.c9users.io/motorista", dadosForm,
+            $.post("/motorista", dadosForm,
                 function(data, status){
                      if(data["ok"]){
                         $("#myModalLabel").html("<span style='color: #f7f618; text-shadow: 1px 1px #c0c0c0; font-size: 1.4em;text-decoration:none;'>Sucesso</span>");
@@ -53,7 +53,7 @@ $(document).ready(function(){
     });
     
 var selectBox = function(){
- $.get("https://fastdelivery-tarcisiolima.c9users.io/veiculo/listv", 
+ $.get("/veiculo/listv", 
  function(data, status){
    for (i = 0; i < data.length; i++){ 
      $('#veiculo').append($('<option>', {
