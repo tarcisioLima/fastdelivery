@@ -14,5 +14,13 @@ class MotoristaPUT implements UsuarioController{
         $m = new Motorista();
         $m->attDeslogar($id);
     }
+    
+    public function localizacao($id){
+        $json = file_get_contents ('php://input');
+        $obj = json_decode($json);
+        $l = new Localizacao();
+        $l->atualizar($obj,$id);
+    }
+    
 }
 ?>

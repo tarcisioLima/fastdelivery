@@ -44,15 +44,6 @@ class Motorista extends DAO implements Usuario{
             echo $this->res400(1,"Nao foi possível deslogar");
         }
     }
-/*    public function attDeslogar(){
-        /*$stmt = $this->conn->prepare("SELECT l.cd_login FROM tb_cliente AS c INNER JOIN tb_login AS l ON c.cd_login = l.cd_login 
-                                      WHERE c.cd_cliente LIKE ?") or die($this->res400(1, "Erro interno"));
-        $stmt = $this->conn->prepare("UPDATE tb_motorista as m INNER JOIN tb_login as l on m.cd_login = l.cd_login
-                                      INNER JOIN tb_status as s on m.cd_status = s.cd_status SET cd_token = null, 
-                                      m.cd_status = 4  WHERE cd_motorista = ?") or die($this->res400(1, "Erro interno"));
-        $stmt->bind_param("i",$this->id) or die($this->res400(2, "Erro interno"));
-        $stmt->execute() or die($this->res400(3, "Erro interno"));
-        echo $this->res200(1,"Deslogado",null);
-    }*/
+    
 }
 ?>
