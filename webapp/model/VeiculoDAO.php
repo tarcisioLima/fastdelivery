@@ -13,10 +13,12 @@ class VeiculoDAO {
     }
     
     public function cadVeiculo(){
+        $fake =  false;
+        
         if(!$this->verificaPlaca($this->placa)){
-             $stmt = $this->conn->prepare("INSERT INTO tb_veiculo (ds_placa, ds_modelo, ds_cor, ic_empresa)
-                                      VALUES (?,?,?,?)") or die($conn->error);
-            $stmt->bind_param("sssi", $this->placa, $this->modelo, $this->cor, $this->boolean) or die($stmt->error);
+             $stmt = $this->conn->prepare("INSERT INTO tb_veiculo (ds_placa, ds_modelo, ds_cor, ic_empresa, ic_ocupado)
+                                      VALUES (?,?,?,?,?)") or die($conn->error);
+            $stmt->bind_param("sssii", $this->placa, $this->modelo, $this->cor, $this->boolean, $fake) or die($stmt->error);
             $stmt->execute() or die($stmt->error);
             $stmt->close();
             echo json_encode(["ok" => true,  "resp" => "Veiculo " . $this->modelo . " cadastrado com sucesso."]);
@@ -39,7 +41,7 @@ class VeiculoDAO {
         }
     
     public function getVeiculos(){
-        $st = $this->conn->prepare("SELECT cd_veiculo, ds_modelo FROM tb_veiculo") or die("ERROR ".$conn->error);
+        $st = $this->conn->prepare("SELECT cd_veiculo, ds_modelo FROM tb_veiculo WHERE ic_ocupado = FALSE") or die("ERROR ".$conn->error);
         $st->execute() or die("2".$st->error);
         $st->bind_result($col0,$col1);
         $box = array();

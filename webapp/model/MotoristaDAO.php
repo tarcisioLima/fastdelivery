@@ -34,7 +34,7 @@ class MotoristaDAO{
     public function cadastrar(){
 
       if(!$this->existente($this->login)){
-        $stmtL = $this->conn->prepare("INSERT INTO tb_login (ds_celular, ds_senha, cd_gcm) VALUES (?,?,?)")
+        $stmtL = $this->conn->prepare("INSERT INTO tb_login (ds_celular, ds_senha, cd_token) VALUES (?,?,?)")
                                       or die("2".$conn->error);
         $mempty = null;                 
         $stmtL->bind_param("sss", $this->login, $this->senha, $mempty) or die("3".$stmtL->error);
@@ -55,6 +55,7 @@ class MotoristaDAO{
                                             $this->idVeiculo) or die("ERRO2 ".$stmt->error);
                                             
         $stmt->execute() or die($stmt->error);
+        $this->vincularVeiculo($this->idVeiculo);
         $stmtL->close();
         $stmt->close();
         
@@ -66,6 +67,12 @@ class MotoristaDAO{
     }
     public function checarStatus(){}
     
+    private function vincularVeiculo($idv){
+        $st = $this->conn->prepare("UPDATE tb_veiculo SET ic_ocupado = TRUE WHERE cd_veiculo= ?") or die("10".$conn->error);
+        $st->bind_param("i", $idv) or die("10".$st->error);
+        $st->execute() or die("10".$st->error);
+        $st->close();
+    }
     private function existente($l){
       $consta = $this->conn->prepare("SELECT cd_login FROM tb_login WHERE ds_celular LIKE ?") or die($conn->error);
       $consta->bind_param("s", $l) or die($consta->error);
