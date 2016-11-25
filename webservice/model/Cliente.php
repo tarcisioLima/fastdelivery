@@ -32,17 +32,19 @@ class Cliente extends DAO implements Usuario{
             $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = ? WHERE cd_login LIKE ? ") or die($this->res400(4, "Erro interno"));
             $stmt->bind_param("si",$token,$id) or die($this->res400(5, "Erro interno"));
             $stmt->execute() or die(res400(6,"Erro interno"));
-            $stmt->close();
-            header('Authorization: '. $token);
-            echo $this->res200(1,"Logado",null);
+            if($stmt->fetch() == 1){
+                $stmt->close(); 
+                header('Authorization: '. $token);
+                echo $this->res200(1,"Logado",null);
+            } else {
+                echo $this->res200(2,"Erro ao completar autenticacao",null);
+            }
         } else {
-            echo $this->res400(2,"Autenticacao invalida",null);
+            echo $this->res400(3,"Autenticacao invalida",null);
         }
     }
     
     public function attDeslogar($id){
-        /*$stmt = $this->conn->prepare("SELECT l.cd_login FROM tb_cliente AS c INNER JOIN tb_login AS l ON c.cd_login = l.cd_login 
-                                      WHERE c.cd_cliente LIKE ?") or die($this->res400(1, "Erro interno"));*/
         $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = null where cd_login = ?") or die($this->res400(1, "Erro interno"));
         $stmt->bind_param("i",$id) or die($this->res400(2, "Erro interno"));
         $stmt->execute() or die($this->res400(3, "Erro interno"));
