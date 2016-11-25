@@ -1,22 +1,25 @@
  <?php
 
 class Autenticacao extends DAO{
-    private $username, $password, $token;
-    define ('alg'    , 'HS256');
-    define ('typ'   , 'JWT');
-    define ('iss' , 'fastdelivery-gmoraiz.c9users.io');
-    define ('key'    , 'trabalhodephp');
-    
-    public static function token($username, $password){
+    private $username, $token, $alg, $typ, $iss, $key;
+
+    public function __construct($username = ""){
+        parent::__construct();
         $this->username = $username;
-        $this->password = $password;
+        $this->alg = 'HS256';
+        $this->key = 'trabalhodephp';
+        $this->iss = 'fastdelivery-gmoraiz.c9users.io';
+        $this->typ = 'JWT';
+    }
+    
+    public function token(){
         $this->gerarToken();
         return $this->token;
     }
     
     private function gerarToken(){ 
         $header  = ['typ' => $this->typ, 'alg' => $this->alg];
-        $payload = ['iss' => $this->iss, 'username' => $this->username, 'password' => $this->password];
+        $payload = ['iss' => $this->iss, 'usertel' => $this->username];
         $header  = json_encode($header);
         $header  = base64_encode($header);
         $payload = json_encode($payload);
@@ -26,18 +29,18 @@ class Autenticacao extends DAO{
         $this->token = "$header.$payload.$signature";
     }
     
-    public static function verificarAcesso($token,$user){
-        $stmt = $this->conn->prepare("SELECT u.cd_".$user." FROM tb_".$user." AS u INNER JOIN tb_login AS l ON u.cd_login
-                                      = l.cd_login WHERE L.cd_token LIKE ?") or die($this->res400(1, "Erro interno"));
+    public function verificarAcesso($token,$user){
+        $stmt = $this->conn->prepare("SELECT l.cd_login FROM tb_".$user." AS u INNER JOIN tb_login AS l ON u.cd_login
+                                      = l.cd_login WHERE l.cd_token LIKE ?") or die($this->error.$this->res400(1, "Erro interno"));
         $stmt->bind_param("s",$token) or die($this->res400(2, "Erro interno"));
         $stmt->execute() or die($this->res400(3, "Erro interno"));
-        if ($stmt->affected_rows == 1){
-            $stmt->bind_result($id);
-            $this->id = $id;
-            return true;
-        } else {
+        $stmt->bind_result($col0);
+        if ($stmt->fetch() == 1){
+            $id = $col0;
+            $stmt->close();
+            return $id;
+        } else
             return false;
-        }
     }
 }
 

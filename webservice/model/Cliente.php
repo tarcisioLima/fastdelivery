@@ -1,32 +1,59 @@
 <?php
 require_once "configs/autoloading.php";
 
-class Cliente extends DAO{
+class Cliente extends DAO implements Usuario{
     
     public function __construct(){parent::__construct();}
     
     public function inserir($obj){
         $stmt = $this->conn->prepare("INSERT INTO tb_login(ds_celular,ds_senha) VALUES(?,?)") or die($this->res400(1, "Erro interno"));
         $stmt->bind_param("ss",$obj->telefone,$obj->senha) or die($this->res400(2, "Erro interno"));
-        $stmt->execute() or die($stmt->errno == 
-        ? $this->res400(3,"Usuario ja existe") : "");
-        $stmt2 = $this->conn->prepare("INSERT INTO tb_cliente(nm_cliente,ds_comprovante,cd_login) VALUES(?,?,?)") or die($this->res400(4, "Erro interno"));
-        $stmt2->bind_param("ssi",$obj->nome,$obj->comprovante,$stmt->insert_id) or die($this->res400(5, "Erro interno"));
-        $stmt2->execute() or die($this->res400(6, "Erro interno"));
+        $stmt->execute() or die($stmt->errno == 1062 ? $this->res400(3,"Usuario ja existe") : "");
+        $idL = $stmt->insert_id;
+        $stmt->close();
+        $stmt = $this->conn->prepare("INSERT INTO tb_cliente(nm_cliente,ds_comprovante,cd_login) VALUES(?,?,?)") or die($this->res400(4, "Erro interno"));
+        $stmt->bind_param("ssi",$obj->nome,$obj->comprovante,$idL) or die($this->res400(5, "Erro interno"));
+        $stmt->execute() or die($this->res400(6, "Erro interno"));
+        $stmt->close();
         echo $this->res200(1,"Cadastrado com sucesso",null);
     }
     
-    public function buscar($id){
-        
+    public function attLogar($obj){
+        $stmt = $this->conn->prepare("SELECT c.cd_login FROM tb_cliente AS c INNER JOIN tb_login AS l ON c.cd_login = l.cd_login 
+                                      WHERE l.ds_celular LIKE ? and l.ds_senha LIKE ?") or die($this->res400(1, "Erro interno"));
+        $stmt->bind_param("ss",$obj->login,$obj->senha) or die($this->res400(2, "Erro interno"));
+        $stmt->execute() or die($this->res400(3, "Erro interno"));
+        $stmt->bind_result($col0);
+        if ($stmt->fetch() == 1){
+            $id = $col0;
+            $stmt->close();
+            $jwt = new Autenticacao ($obj->login);
+            $token = $jwt->token();
+            $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = ? WHERE cd_login LIKE ? ") or die($this->res400(4, "Erro interno"));
+            $stmt->bind_param("si",$token,$id) or die($this->res400(5, "Erro interno"));
+            $stmt->execute() or die(res400(6,"Erro interno"));
+            $stmt->close();
+            header('Authorization: '. $token);
+            echo $this->res200(1,"Logado",null);
+        } else {
+            echo $this->res400(2,"Autenticacao invalida",null);
+        }
     }
     
-    public function atualizar($id, $obj){
-        
+    public function attDeslogar($id){
+        /*$stmt = $this->conn->prepare("SELECT l.cd_login FROM tb_cliente AS c INNER JOIN tb_login AS l ON c.cd_login = l.cd_login 
+                                      WHERE c.cd_cliente LIKE ?") or die($this->res400(1, "Erro interno"));*/
+        $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = null where cd_login = ?") or die($this->res400(1, "Erro interno"));
+        $stmt->bind_param("i",$id) or die($this->res400(2, "Erro interno"));
+        $stmt->execute() or die($this->res400(3, "Erro interno"));
+        if($stmt->affected_rows == 1){
+            $stmt->close();
+            echo $this->res200(1,"Deslogado",null);
+        } else {
+            echo $this->res400(1,"Nao foi possível deslogar");
+        }
     }
-    
-    public function deletar($id){
-        
-    }
+
     
     /*public function getNome($id=1){
         $st = $this->conn->prepare("SELECT * FROM tb_teste WHERE id=?") or die("1".$conn->error);
