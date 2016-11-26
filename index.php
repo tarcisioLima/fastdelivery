@@ -10,7 +10,10 @@
 		"/veiculo"  	  => "VeiculoController",
 		"/veiculo/listv"  => "ListVeiculoController",
 		"/taxa"			  => "TaxaController",
-		"taxa/listm"      => "ListMedidaController"
+		"/taxa/listm"     => "ListMedidaController",
+		"/pedido"         => "PedidoController",
+		"/mapa"			  => "MapaController"
+		
 	];
 	
 	foreach($routes as $url => $controller){

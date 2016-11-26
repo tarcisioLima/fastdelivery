@@ -24,8 +24,15 @@ class TaxaDAO{
         echo json_encode(["resp" => "Medidas Atualizadas com Sucesso"]);
     }
     
-    public function updateVigor(){
-       
+    public function emVigor(){
+       $stmt1 = $this->conn->prepare("UPDATE tb_medida set ic_medida = FALSE") or die("erro".$conn->error);
+       $stmt1->execute() or die("1".$stmt1->error);
+       $stmt1->close();
+       $stmt2 = $this->conn->prepare("UPDATE tb_medida set ic_medida = TRUE where ds_medida = ?");
+       $stmt2->bind_param("s", $this->medida);
+       $stmt2->execute() or die("2".$stmt2->error);
+       $stmt2->close();
+       echo json_encode(["resp" => $$this->medida . " esta em vigor."]);
     }
     
     public function getMedida(){

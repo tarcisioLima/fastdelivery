@@ -9,3 +9,5 @@ SAIR
 https://fastdelivery-tarcisiolima.c9users.io/
 http://localhost:83/fastdelivery/precosMedidas/precoMedidas.php
 https://getbootstrap.com/components/#dropdowns
+
+curl https://fastdelivery-tarcisiolima.c9users.io/taxa -X PUT -d '{"met": "atualizarVigor"}'

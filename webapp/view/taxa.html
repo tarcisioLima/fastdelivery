@@ -32,14 +32,14 @@
                           Cadastrar Veiculo</a></li>
                           <li><a href="/taxa"><span class="glyphicon glyphicon-usd"></span>
                           Definir Taxa de Serviço</a></li>
-                          <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span>
+                          <li><a href="/pedido"><span class="glyphicon glyphicon-eye-open"></span>
                           Visualizar Pedidos</a></li>
                           <li><a href="#"><span class="glyphicon glyphicon-search"></span>
                           Usuários</a></li>
                   </ul>
               </li>
               
-              <li><a href="#">Mapa
+              <li><a href="/mapa">Mapa
               <span class="glyphicon glyphicon-map-marker" ></span></a></li> 
               <li><a href="/">Sair 
                   <span class="glyphicon glyphicon-log-out"></span></span></a></li> 
@@ -57,6 +57,7 @@
     				    <label class="control-label col-sm-2" for="medida">Selecione Medida</label>
     				    <div class="col-sm-5">
     				        <select class="form-control" id="medida" required>
+    				            <option value=""> Selecione </option>
     				        </select>
     				    </div>
     				</div>
@@ -71,7 +72,7 @@
 				    <div class="form-group">
     				    <label class="control-label col-sm-2" for="qtInicial">Quantidade Inicial</label>
     				    <div class="col-sm-5">
-    				        <input type="number" class="form-control" id="qtInicial" placeholder="R$" required>
+    				        <input type="number" class="form-control" id="qtInicial" required>
     				    </div>
 				    </div>
 				   
@@ -85,23 +86,31 @@
 				    <div class="form-group">
     				    <label class="control-label col-sm-2" for="qtMedida">Quantidade Medida</label>
     				    <div class="col-sm-5">
-    				        <input type="number" class="form-control" id="qtMedida" placeholder="R$" required>
+    				        <input type="number" class="form-control" id="qtMedida" required>
     				    </div>
 				    </div>
                    
 				</div>
+			
 					<div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-5">
                       <button type="submit" class="btn btn-primary" >Atualizar valores
                       <span class="glyphicon glyphicon-send"></span></button>
-                      <button class="btn btn-primary" >Por medida em vigor</button>
+                      
                     </div>
                 </div>
 			</form>
-            
+			
+			
+        </div><div class="row-fluid">
+			    <div class="col-md-2">
+			    <button class="btn btn-primary" id="vigorar" style="margin-left:125%">Por medida em vigor</button>
+			    </div>
         </div>
     </div>
+    	
     </section>
+    
     <!-- Modal de Cadastro -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
