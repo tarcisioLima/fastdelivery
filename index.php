@@ -12,6 +12,7 @@
 		"/taxa"			  => "TaxaController",
 		"/taxa/listm"     => "ListMedidaController",
 		"/pedido"         => "PedidoController",
+		"/pedido/listp"   => "ListPedidoController",
 		"/mapa"			  => "MapaController"
 		
 	];
