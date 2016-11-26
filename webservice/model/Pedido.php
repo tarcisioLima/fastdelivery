@@ -5,10 +5,36 @@ class Pedido extends DAO{
     // AIzaSyD1IUo6qHNPlgL6z-WCb1egrJGsztm8Z0w
     public function __construct(){parent::__construct();}
     
-    public function buscar($obj,$id){
-        $g = new Geocodificacao ();
-        $g->geo($obj->endereco);
-        echo $g->lat().'-'.$g->long();
+    public function buscar($endereco,$id){
+        $g = new Geocodificacao();
+        $g->geo($endereco);
+        $m = $this->motoristaProximo($g->lat(),$g->long());
+        if ($m != null){
+        	$data = array("id"    => $m['id'],
+        	                "preco" => $this->preco($m['distancia']),
+        	                "tempo" => null);
+        	echo $this->res200(1, "Motorista disponivel", $data);
+        } else
+        	echo $this->res200(2, "Nenhum motorista disponivel", null);
+    }
+
+	private function motoristaProximo($lat,$long){
+		$distancia = 989898912213;
+		$motoId = null;
+		$stmt = $this->conn->prepare("SELECT cd_motorista, vl_latitude, vl_longitude from tb_motorista where cd_status = 1") or die($this->res400(1, "Erro interno"));
+        $stmt->execute() or die($this->res400(2, "Erro interno"));
+        $stmt->bind_result($id,$latM,$longM);
+        while($stmt->fetch()){
+        	$motorista  = $this->distancia($lat,$long,$latM,$longM);
+        	if($motorista < $distancia){
+        		$motoId = $id;
+        		$distancia = $motorista;
+        	}
+        }
+    	if($motoId != null)
+    		return array ("id" => $motoId, "distancia" => round($distancia) );
+    	else
+    		return $motoId;
     }
     
     private function distancia($p1LA,$p1LO,$p2LA,$p2LO){
@@ -24,5 +50,34 @@ class Pedido extends DAO{
         return $r * $c * 1000; 
     }
     
+    private function preco($distancia){ 
+    	$stmt = $this->conn->prepare("SELECT ds_medida, vl_medida, qt_medida, vl_inicial, qt_inicial from tb_medida where
+    	                              ic_medida = true") or die($this->res400(1, "Erro interno"));
+        $stmt->execute() or die($this->res400(2, "Erro interno"));
+        $stmt->bind_result($dsMedida,$vlMedida,$qtMedida,$vlInicial,$qtInicial);
+        if($stmt->fetch() == 1){
+        	switch ($dsMedida){
+        		case 'Kilometro':
+        			$distancia = intval($distancia / 1000) + (($distancia % 1000 > 0) ? 1 : 0);
+        		    return $distancia <= $qtInicial ? $vlInicial : ((($distancia-$qtInicial) * $vlMedida)/$qtMedida) + $vlInicial;
+        			break;
+        		case 'Metro':
+        			echo "oi";
+        			break;
+        		case 'Hora':
+        			echo "ray";
+        			break;
+        		case 'Segundo':
+        			echo "eita";
+        			break;
+        		default:
+        			break;
+        	}
+        }
+    }
+    
+    private function tempo($tempo){
+    	
+    }
 }
 ?>
