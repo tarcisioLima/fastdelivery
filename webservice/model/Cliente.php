@@ -32,7 +32,7 @@ class Cliente extends DAO implements Usuario{
             $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = ? WHERE cd_login LIKE ? ") or die($this->res400(4, "Erro interno"));
             $stmt->bind_param("si",$token,$id) or die($this->res400(5, "Erro interno"));
             $stmt->execute() or die(res400(6,"Erro interno"));
-            if($stmt->fetch() == 1){
+            if($stmt->affected_rows == 1){
                 $stmt->close(); 
                 header('Authorization: '. $token);
                 echo $this->res200(1,"Logado",null);
