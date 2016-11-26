@@ -15,5 +15,12 @@ class ClientePUT implements UsuarioController{
         $c->attDeslogar($id);
     }
     
+    public function pedido($id){
+        $json = file_get_contents('php://input');
+        $obj = json_decode($json);
+        $c = new Pedido();
+        $c->buscar($obj,$id);
+    }
+    
 }
 ?>
