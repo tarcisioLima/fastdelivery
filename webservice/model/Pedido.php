@@ -2,13 +2,75 @@
 require_once "configs/autoloading.php";
 
 class Pedido extends DAO{
-    // AIzaSyD1IUo6qHNPlgL6z-WCb1egrJGsztm8Z0w
+	
     public function __construct(){parent::__construct();}
     
-    public function buscar($obj,$id){
-        $g = new Geocodificacao ();
-        $g->geo($obj->endereco);
-        echo $g->lat().'-'.$g->long();
+    public function buscar($endereco,$id){
+        $g = new Geocodificacao();
+        $g->geo($endereco);
+        $m = $this->motoristaProximo($g->lat(),$g->long());
+        if ($m != null){
+        	$data = array("id"    => $m['id'],
+        	                "preco" => $this->preco($m['distancia']),
+        	                "tempo" => null);
+        	echo $this->res200(1, "Motorista disponivel", $data);
+        } else
+        	echo $this->res200(2, "Nenhum motorista disponivel", null);
+    }
+    
+    public function inserir($obj,$id){
+    	$stmt = $this->conn->prepare("SELECT cd_motorista FROM tb_motorista where cd_status = 1 and 
+    	                              cd_motorista = ?") or die($this->res400(1, "Erro interno"));
+        $stmt->bind_param("i",$obj->id) or die($this->res400(2, "Erro interno"));
+        $stmt->execute() or die($this->res400(3, "Erro interno"));
+        if($stmt->fetch() == 1){
+        	$stmt->close();
+        	$stmt = $this->conn->prepare("SELECT cd_cliente FROM tb_cliente where cd_login = ?") or die($this->res400(4, "Erro interno"));
+        	$stmt->bind_param("i",$id) or die($this->res400(5, "Erro interno"));
+        	$stmt->execute() or die($this->res400(6, "Erro interno"));
+        	$stmt->bind_result($col0);
+        	$stmt->fetch();
+        	$idC = $col0;
+        	$stmt->close();
+        	$stmt = $this->conn->prepare("INSERT INTO tb_pedido(dt_solicitacao,ds_endereco_entrega,ds_endereco_retirada,
+        	                              vl_pedido, cd_motorista, cd_cliente, cd_situacao) VALUES (now(),?,?,?,?,?,1)")
+        	                              or die($this->res400(7, "Erro interno"));
+        	$stmt->bind_param("ssdii",$obj->endEntrega,$obj->endRetirada,$obj->preco,
+        	                   $obj->id,$idC) or die($this->res400(8, "Erro interno"));
+        	$stmt->execute() or die($stmt->error.$this->res400(9, "Erro interno"));
+        	$idP = $stmt->insert_id;
+        	$stmt->close();
+        	$stmt = $this->conn->prepare("UPDATE tb_servico SET ds_tempo_estimado = ?, cd_pedido = ? where
+        	                              cd_motorista = ?") or die($this->res400(10, "Erro interno"));
+        	$stmt->bind_param("sii",$obj->tempo,$idP,$obj->id) or die($this->res400(11, "Erro interno"));
+        	$stmt->execute() or die($this->res400(12, "Erro interno"));
+        	$stmt->close();
+        	$stmt = $this->conn->prepare("UPDATE tb_motorista  SET cd_status = 3 WHERE cd_motorista LIKE ? ") or die($this->res400(4, "Erro interno"));
+            $stmt->bind_param("i", $obj->id) or die($this->res400(13, "Erro interno"));
+            $stmt->execute() or die(res400(14,"Erro interno"));
+            echo $this->res200(1, "Pedido enviado ao motorista. Aguarde a resposta.", null);
+        } else {
+        	echo $this->res400(1, "Motorista indisponivel. Faça outro pedido.");
+        }
+    }
+
+	private function motoristaProximo($lat,$long){
+		$distancia = 989898912213;
+		$motoId = null;
+		$stmt = $this->conn->prepare("SELECT cd_motorista, vl_latitude, vl_longitude from tb_motorista where cd_status = 1") or die($this->res400(1, "Erro interno"));
+        $stmt->execute() or die($this->res400(2, "Erro interno"));
+        $stmt->bind_result($id,$latM,$longM);
+        while($stmt->fetch()){
+        	$motorista  = $this->distancia($lat,$long,$latM,$longM);
+        	if($motorista < $distancia){
+        		$motoId = $id;
+        		$distancia = $motorista;
+        	}
+        }
+    	if($motoId != null)
+    		return array ("id" => $motoId, "distancia" => round($distancia) );
+    	else
+    		return $motoId;
     }
     
     private function distancia($p1LA,$p1LO,$p2LA,$p2LO){
@@ -24,5 +86,34 @@ class Pedido extends DAO{
         return $r * $c * 1000; 
     }
     
+    private function preco($distancia){ 
+    	$stmt = $this->conn->prepare("SELECT ds_medida, vl_medida, qt_medida, vl_inicial, qt_inicial from tb_medida where
+    	                              ic_medida = true") or die($this->res400(1, "Erro interno"));
+        $stmt->execute() or die($this->res400(2, "Erro interno"));
+        $stmt->bind_result($dsMedida,$vlMedida,$qtMedida,$vlInicial,$qtInicial);
+        if($stmt->fetch() == 1){
+        	switch ($dsMedida){
+        		case 'Kilometro':
+        			$distancia = intval($distancia / 1000) + (($distancia % 1000 > 0) ? 1 : 0);
+        		    return $distancia <= $qtInicial ? $vlInicial : ((($distancia-$qtInicial) * $vlMedida)/$qtMedida) + $vlInicial;
+        			break;
+        		case 'Metro':
+        			echo "oi";
+        			break;
+        		case 'Hora':
+        			echo "ray";
+        			break;
+        		case 'Segundo':
+        			echo "eita";
+        			break;
+        		default:
+        			break;
+        	}
+        }
+    }
+    
+    private function tempo($tempo){
+    	
+    }
 }
 ?>
