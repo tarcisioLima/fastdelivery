@@ -2,8 +2,9 @@
 
 require_once 'configs/autoloading.php';
 
-class VeiculoController{
+class VeiculoController extends Sessao{
     public function __construct(){
+        parent::__construct();
         $_SERVER['REQUEST_METHOD'] == 'GET' ? include "webapp/view/veiculo.html"
                                             : $this->cadastrarVeiculo();
     }

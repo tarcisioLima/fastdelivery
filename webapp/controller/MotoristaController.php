@@ -1,8 +1,9 @@
 <?php
 require_once 'configs/autoloading.php';
 
-class MotoristaController{
+class MotoristaController extends Sessao{
     public function __construct(){
+        parent::__construct();
         $_SERVER['REQUEST_METHOD'] == 'GET' ? include 'webapp/view/motorista.html' 
                                             : $this->realizarCadastro();
     }

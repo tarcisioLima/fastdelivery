@@ -2,9 +2,10 @@
 
 require_once 'configs/autoloading.php';
 
-class LoginController{
+class LoginController extends Sessao{
     
     public function __construct(){
+        $this->verificarSessaoLogin();
         $_SERVER['REQUEST_METHOD'] == 'GET'
         ? include 'webapp/view/pagina-login.html' : $this->logar();
     }
@@ -13,7 +14,7 @@ class LoginController{
         $enter = new LoginDAO($_POST['user'], $_POST['passw']);
         header('Content-Type: application/json'); 
         if($enter->login()){
-            #Estabelece Sessão e Redireciona
+            $_SESSION["master"] =  true;
             echo json_encode(["ok" => true]);
         }else{
             echo json_encode(["ok" => false]);

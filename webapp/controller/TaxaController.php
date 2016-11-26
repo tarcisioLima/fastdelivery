@@ -2,8 +2,9 @@
 
 require_once 'configs/autoloading.php';
 
-class TaxaController{
+class TaxaController extends Sessao{
     public function __construct(){
+        parent::__construct();
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
              include "webapp/view/taxa.html";
             }elseif ($_SERVER['REQUEST_METHOD'] == 'PUT'){

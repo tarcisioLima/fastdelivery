@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 	<meta charset="UTF-8">
-	<title> Veiculo </title>	
+	<title> Cliente </title>	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- BOOTSTRAP IMPORTS  -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -10,7 +10,7 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Meus Imports -->
 	<link rel="stylesheet" href="webapp/public/css/painel.css">
-	<script type="text/javascript" src="webapp/public/js/veiculo.js"></script>
+	<script type="text/javascript" src="webapp/public/js/cliente.js"></script>
 	<script type="text/javascript" src="webapp/public/js/logout.js"></script>
 </head>
 <body>
@@ -42,76 +42,21 @@
               
               <li><a href="/mapa">Mapa
               <span class="glyphicon glyphicon-map-marker" ></span></a></li> 
-              <li><a id="logout">Sair  
+              <li><a id="logout">Sair 
                   <span class="glyphicon glyphicon-log-out"></span></span></a></li> 
             </ul>
         </div>
     </nav>
-    
+   
        <section class="container panel panel-default">
-       <div class="panel-heading"> Cadastrar Veiculo </div>
+       <div class="panel-heading"> Cliente </div>
            <div class="panel-body">
             <div class="row-fluid"> 
-                 <form class="form-horizontal" id="form-veiculo">
-                    <div class="form-group">
-					<label class="control-label col-sm-1" for="placa">Placa</label>
-					<div class="col-sm-5">
-					 	<input type="text" class="form-control" id="placa" placeholder="Digite a placa do veiculo"  maxlength="7" minlength="7" required>
-					 </div>
-					</div>
-					
-					<div class="form-group">
-					<label class="control-label col-sm-1" for="modelo">Modelo</label>
-					<div class="col-sm-5">
-					 	<input type="text" class="form-control" id="modelo" placeholder="Descreva o modelo do veiculo"  maxlength="40" minlength="4" required>
-					 </div>
-					</div>
-					
-					<div class="form-group">
-					<label class="control-label col-sm-1" for="cor">Cor</label>
-					<div class="col-sm-5">
-					 	<input type="text" class="form-control" id="cor" placeholder="Digite a cor veiculo"  maxlength="20" minlength="4" required>
-					 </div>
-					</div>
-					<div class="form-group">
-					    
-				    <label class="control-label col-sm-1">Dono</label>
-				    <div class="col-sm-5">
-        				<label class="radio-inline"><input type="radio" name="prop" value="1" checked>Empresa</label>
-                        <label class="radio-inline"><input type="radio" name="prop" value="0">Pessoal</label>
-                    </div>
-                    <br><br>
-				</div>
-					<div class="form-group"> 
-                    <div class="col-sm-offset-1 col-sm-5">
-                      <button type="submit" class="btn btn-primary" >enviar
-                      <span class="glyphicon glyphicon-send"></span></button>
-                      <button type="reset" class="btn btn-danger">limpar
-                      <span class="glyphicon glyphicon-erase"></span></button>
-                    </div>
-                </div>
-			</form>
-            
+                 <p>Página em desenvolvimento.</p>
+	
         </div>
     </div>
-    </section>
-    <!-- Modal de Cadastro -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					  <span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel"></h4>
-					</div>
-					<div class="modal-body" id="corpo-modal"></div>
-					<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>					
-					</div>
-					</div>
-			</div>
-		</div>
-<!-- Fim Modal -->
+</section>
+ 
 </body>
 </html>

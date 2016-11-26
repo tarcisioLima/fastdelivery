@@ -2,8 +2,9 @@
 
 require_once 'configs/autoloading.php';
 
-class PedidoController{
+class PedidoController extends Sessao{
     public function __construct(){
+        parent::__construct();
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
              include "webapp/view/pedido.html";
         }else{

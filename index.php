@@ -13,8 +13,10 @@
 		"/taxa/listm"     => "ListMedidaController",
 		"/pedido"         => "PedidoController",
 		"/pedido/listp"   => "ListPedidoController",
-		"/mapa"			  => "MapaController"
-		
+		"/mapa"			  => "MapaController",
+		"/cliente"        => "ClienteController",
+		"/logout"         => "LogoutController",
+		"/notFound"       => "NotFoundController"
 	];
 	
 	foreach($routes as $url => $controller){

@@ -2,8 +2,10 @@
 
 require_once 'configs/autoloading.php';
 
-class ListMedidaController{
+class ListMedidaController extends Sessao{
+    
     public function __construct(){
+        parent::__construct();
         $this->getMedida();    
     }
     

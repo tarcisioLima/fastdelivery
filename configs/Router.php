@@ -20,7 +20,7 @@ class Router{
         $key = array_search($url, $this->rotas);
         
         if($key === false){
-             new NotFoundController();
+             header('Location: /notFound');
         }else {
              new $this->acoes[$key]();
         }
