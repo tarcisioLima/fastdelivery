@@ -12,12 +12,7 @@ class Autenticacao extends DAO{
         $this->typ = 'JWT';
     }
     
-    public function token(){
-        $this->gerarToken();
-        return $this->token;
-    }
-    
-    private function gerarToken(){ 
+    private function gerarToken(){
         $header  = ['typ' => $this->typ, 'alg' => $this->alg];
         $payload = ['iss' => $this->iss, 'usertel' => $this->username];
         $header  = json_encode($header);
@@ -42,6 +37,30 @@ class Autenticacao extends DAO{
         } else
             return false;
     }
+    
+    public function darAcesso($id){
+        $this->gerarToken();
+        $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = ? WHERE cd_login LIKE ? ") or die($this->res400(4, "Erro interno"));
+        $stmt->bind_param("si",$this->token,$id) or die($this->res400(5, "Erro interno"));
+        $stmt->execute() or die(res400(6,"Erro interno"));
+        if($stmt->affected_rows == 1){
+            $stmt->close(); 
+            header('Authorization: '. $token);
+            return $this->res200(1,"Logado",null);
+        } else
+            return $this->res200(2,"Erro ao completar autenticacao",null);
+    }
+    
+    public function retirarAcesso($id){
+        $stmt = $this->conn->prepare("UPDATE tb_login SET cd_token = null where cd_login = ?") or die($this->res400(1, "Erro interno"));
+        $stmt->bind_param("i",$id) or die($this->res400(2, "Erro interno"));
+        $stmt->execute() or die($this->res400(3, "Erro interno"));
+        if($stmt->affected_rows == 1){
+            $stmt->close();
+            return $this->res200(1,"Deslogado",null);
+        } else 
+            return $this->res400(1,"Nao foi possível deslogar");
+    }
 }
 
- ?>
+?>

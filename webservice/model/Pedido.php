@@ -11,19 +11,16 @@ class Pedido extends DAO{
         $m = $this->motoristaProximo($g->lat(),$g->long());
         if ($m != null){
         	$data = array("id"    => $m['id'],
-        	                "preco" => $this->preco($m['distancia']),
-        	                "tempo" => null);
+        	              "preco" => $this->preco($m['distancia']),
+        	              "tempo" => null);
         	echo $this->res200(1, "Motorista disponivel", $data);
         } else
         	echo $this->res200(2, "Nenhum motorista disponivel", null);
-    }
+    }        
     
     public function inserir($obj,$id){
-    	$stmt = $this->conn->prepare("SELECT cd_motorista FROM tb_motorista where cd_status = 1 and 
-    	                              cd_motorista = ?") or die($this->res400(1, "Erro interno"));
-        $stmt->bind_param("i",$obj->id) or die($this->res400(2, "Erro interno"));
-        $stmt->execute() or die($this->res400(3, "Erro interno"));
-        if($stmt->fetch() == 1){
+        $s = new Status();
+        if($s->buscar($obj->id,1)){
         	$stmt->close();
         	$stmt = $this->conn->prepare("SELECT cd_cliente FROM tb_cliente where cd_login = ?") or die($this->res400(4, "Erro interno"));
         	$stmt->bind_param("i",$id) or die($this->res400(5, "Erro interno"));
@@ -45,9 +42,7 @@ class Pedido extends DAO{
         	$stmt->bind_param("sii",$obj->tempo,$idP,$obj->id) or die($this->res400(11, "Erro interno"));
         	$stmt->execute() or die($this->res400(12, "Erro interno"));
         	$stmt->close();
-        	$stmt = $this->conn->prepare("UPDATE tb_motorista  SET cd_status = 3 WHERE cd_motorista LIKE ? ") or die($this->res400(4, "Erro interno"));
-            $stmt->bind_param("i", $obj->id) or die($this->res400(13, "Erro interno"));
-            $stmt->execute() or die(res400(14,"Erro interno"));
+        	$s->inserir($obj->id,3);
             echo $this->res200(1, "Pedido enviado ao motorista. Aguarde a resposta.", null);
         } else {
         	echo $this->res400(1, "Motorista indisponivel. Faça outro pedido.");

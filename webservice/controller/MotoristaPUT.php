@@ -3,6 +3,10 @@ require_once "configs/autoloading.php";
 
 class MotoristaPUT implements UsuarioController{
     
+    public function call($m,$args){
+         echo "erro";
+    }
+    
     public function logar(){
         $json = file_get_contents('php://input');
         $obj = json_decode($json);
@@ -20,6 +24,16 @@ class MotoristaPUT implements UsuarioController{
         $obj = json_decode($json);
         $l = new Localizacao();
         $l->atualizar($obj,$id);
+    }
+    
+    public function recusarServico($idP,$id){
+        $c = new Servico();
+        $c->attRecusar($idP, $id);
+    }
+    
+    public function finalizarServico($idP,$id){
+        $c = new Servico();
+        $c->attFinalizar($idP, $id);
     }
     
 }

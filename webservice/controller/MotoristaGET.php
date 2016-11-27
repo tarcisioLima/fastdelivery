@@ -1,9 +1,13 @@
 <?php
+require_once "configs/autoloading.php";
 
-    class MotoristaGET implements Usuario{
-        public function manipular(){
-            echo "Ola";
-        }
+class MotoristaGET{
+        
+    public function servico($id){
+        $c = new Servico();
+        $c->buscar($id);
     }
+        
+}
     
 ?>
