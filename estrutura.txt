@@ -13,3 +13,7 @@ https://getbootstrap.com/components/#dropdowns
 curl https://fastdelivery-tarcisiolima.c9users.io/taxa -X PUT -d '{"met": "atualizarVigor"}'
 
  <!--https://fastdelivery-tarcisiolima.c9users.io/phpmyadmin/-->
+ 
+ 
+ Pegar LatLng aqui
+ http://www.mapcoordinates.net/pt

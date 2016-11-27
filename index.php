@@ -14,6 +14,7 @@
 		"/pedido"         => "PedidoController",
 		"/pedido/listp"   => "ListPedidoController",
 		"/mapa"			  => "MapaController",
+		"/mapa/listll"    => "ListLatLongController",
 		"/cliente"        => "ClienteController",
 		"/logout"         => "LogoutController",
 		"/notFound"       => "NotFoundController"

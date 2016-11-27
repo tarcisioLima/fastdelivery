@@ -10,7 +10,6 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Meus Imports -->
 	<link rel="stylesheet" href="webapp/public/css/painel.css">
-	<script type="text/javascript" src="webapp/public/js/mapa.js"></script>
 	<script type="text/javascript" src="webapp/public/js/logout.js"></script>
 </head>
 <body>
@@ -50,14 +49,17 @@
    
        <section class="container panel panel-default">
        <div class="panel-heading"> Mapa </div>
-           <div class="panel-body">
+           <div class="panel-body" style="padding: 0px">
             <div class="row-fluid"> 
                  
-			
-	
+			<div class="row-fluid" id="omapa"></div>
+	            
         </div>
     </div>
 </section>
- 
+     <script type="text/javascript" src="webapp/public/js/mapa.js"></script>
+     <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp2_1F-1BrSRc3X44jWMWrz60HA4KlmXs&callback=mapaStart">
+    </script>
 </body>
 </html>
