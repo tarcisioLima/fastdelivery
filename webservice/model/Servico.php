@@ -18,13 +18,21 @@ class Servico extends DAO{
             $status->atualizar($id,2);
             $situacao = new Situacao();
             $situacao->atualizar($cdP,2); 
-        	$data = array(  "end-retirada"  => $endR,
-        	                "end-entrega"   => $endE,
+        	$data = array(  "endEntrega"    => $endE,
+        	                "endRetirada"   => $endR,
         	                "valor"         => $vl,  
-        	                "id-produto"    => $cdP);
+        	                "id-pedido"     => $cdP);
             echo $this->res200(1, "Servico aceito", $data);
         } else
-            echo $this->res400(1,"Voce nao possui nenhum servico");
+            echo $this->res200(2,"Voce nao possui nenhum servico",null);
+    }
+    
+    public function inserir($tempo,$idP,$idM){
+        $stmt = $this->conn->prepare("UPDATE tb_servico SET ds_tempo_estimado = ?, cd_pedido = ? where
+        	                              cd_motorista = ?") or die($this->res400(10, "Erro interno"));
+        $stmt->bind_param("sii",$tempo,$idP,$idM) or die($this->res400(11, "Erro interno"));
+        $stmt->execute() or die($this->res400(12, "Erro interno"));
+        $stmt->close();
     }
     
     public function attFinalizar($idP,$id){

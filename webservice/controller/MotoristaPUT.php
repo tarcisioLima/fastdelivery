@@ -36,5 +36,15 @@ class MotoristaPUT implements UsuarioController{
         $c->attFinalizar($idP, $id);
     }
     
+    public function disponivel($id){
+        $s = new Status();
+        $s->atualizar($id, 1);
+    }
+    
+    public function indisponivel($id){
+        $s = new Status();
+        $s->atualizar($id,5);
+    }
+    
 }
 ?>

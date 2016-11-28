@@ -37,6 +37,17 @@ class Cliente extends DAO implements Usuario{
         $jwt = new Autenticacao();
         $jwt->retirarAcesso($id); 
     }
+    
+    public function getId($id){
+        $stmt = $this->conn->prepare("SELECT cd_cliente FROM tb_cliente where cd_login = ?") or die($this->res400(4, "Erro interno"));
+        $stmt->bind_param("i",$id) or die($this->res400(5, "Erro interno"));
+        $stmt->execute() or die($this->res400(6, "Erro interno"));
+        $stmt->bind_result($col0);
+        $stmt->fetch();
+        $idC = $col0;
+        $stmt->close();
+        return $idC;
+    }
 
 }
 

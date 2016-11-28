@@ -14,7 +14,7 @@ class Localizacao extends DAO{
             $stmt->close();
             echo $this->res200(1,"Localizacao Atualizada",null);
         } else {
-            echo $this->res400(1,"Nao foi possivel atualizar a localizacao");
+            echo $this->res200(2,"Nao foi possivel atualizar a localizacao");
         }
     }
 }
