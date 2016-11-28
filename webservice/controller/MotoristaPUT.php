@@ -3,8 +3,8 @@ require_once "configs/autoloading.php";
 
 class MotoristaPUT implements UsuarioController{
     
-    public function call($m,$args){
-         echo "erro";
+    public function __call($m,$arg){
+        header('HTTP/1.0 404 Not Found');
     }
     
     public function logar(){
@@ -39,11 +39,13 @@ class MotoristaPUT implements UsuarioController{
     public function disponivel($id){
         $s = new Status();
         $s->atualizar($id, 1);
+        echo json_encode(array ("cd" => 1 , "msg" => "Status atualizado para disponivel"));
     }
     
     public function indisponivel($id){
         $s = new Status();
         $s->atualizar($id,5);
+        echo json_encode(array ("cd" => 1, "msg" => "Status atualizado para indisponivel"));
     }
     
 }

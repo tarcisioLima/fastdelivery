@@ -45,10 +45,10 @@ class Autenticacao extends DAO{
         $stmt->execute() or die(res400(6,"Erro interno"));
         if($stmt->affected_rows == 1){
             $stmt->close(); 
-            header('Authorization: '. $token);
-            return $this->res200(1,"Logado",null);
+            header('Authorization: '. $this->token);
+            echo $this->res200(1,"Logado",null);
         } else
-            return $this->res200(2,"Erro ao completar autenticacao",null);
+            echo $this->res200(2,"Erro ao completar autenticacao",null);
     }
     
     public function retirarAcesso($id){
@@ -57,9 +57,9 @@ class Autenticacao extends DAO{
         $stmt->execute() or die($this->res400(3, "Erro interno"));
         if($stmt->affected_rows == 1){
             $stmt->close();
-            return $this->res200(1,"Deslogado",null);
+            echo $this->res200(1,"Deslogado",null);
         } else 
-            return $this->res400(1,"Nao foi possível deslogar");
+            echo $this->res400(1,"Nao foi possível deslogar");
     }
 }
 

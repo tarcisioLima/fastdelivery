@@ -31,8 +31,8 @@ class Pedido extends DAO{
         	$idP = $stmt->insert_id;
         	$stmt->close();
         	$servico = new Servico();
-        	$servico->inserir($obj->tempo,$idp,$obj->id);
-        	$status->inserir($obj->id,3);
+        	$servico->inserir($obj->tempo,$idP,$obj->id);
+        	$status->atualizar($obj->id,3);
             echo $this->res200(1, "Pedido enviado ao motorista. Aguarde a resposta.", null);
         } else {
         	echo $this->res200(1, "Motorista indisponivel. Faça outro pedido.",null);
