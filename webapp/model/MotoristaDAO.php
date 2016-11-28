@@ -53,9 +53,12 @@ class MotoristaDAO{
                                             $this->nascimento, $this->imagem, $this->latitude,
                                             $this->longitude, $this->cpf, $idL, 
                                             $this->idVeiculo) or die("ERRO2 ".$stmt->error);
-                                            
+        
         $stmt->execute() or die($stmt->error);
+        // Get Motorista Id
+        $mid = $stmt->insert_id;
         $this->vincularVeiculo($this->idVeiculo);
+        $this->insertServico($mid);
         $stmtL->close();
         $stmt->close();
         
@@ -65,7 +68,13 @@ class MotoristaDAO{
         echo json_encode(["ok" => false, "resp" => "Motorista já cadastrado!"]);
       }
     }
-    public function checarStatus(){}
+    private function insertServico($idm){
+      $q = "INSERT INTO tb_servico (cd_motorista) VALUES (?)";
+      $stmt = $this->conn->prepare($q) or die ("AQUI".$conn->error);
+      $stmt->bind_param("i", $idm) or die($stmt->error);
+      $stmt->execute() or die ($stmt->error);
+      $stmt->close();
+    }
     
     private function vincularVeiculo($idv){
         $st = $this->conn->prepare("UPDATE tb_veiculo SET ic_ocupado = TRUE WHERE cd_veiculo= ?") or die("10".$conn->error);
