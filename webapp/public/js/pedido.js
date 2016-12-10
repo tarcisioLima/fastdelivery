@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $.get("/pedido/listp", 
         function(data, status){
+         console.log(status);
          for(var cliente in data) {
              console.log(cliente);
              var tr = '<tr><th scope="row">' + cliente + '</th>';

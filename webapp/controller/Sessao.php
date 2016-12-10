@@ -8,14 +8,14 @@ class Sessao{
     
      protected function verificarSessao(){
         if(!isset($_SESSION['master'])){
-            header('Location: /');
+            header('Location:/');
         }
     }
     
     protected function verificarSessaoLogin(){
         session_start();
         if(isset($_SESSION['master'])){
-            header('Location: /motorista');
+            header('Location:/mapa');
         }
     }
     protected function destruirSessao(){

@@ -8,12 +8,12 @@ class Cliente extends DAO implements Usuario{
     public function inserir($obj){
         $stmt = $this->conn->prepare("INSERT INTO tb_login(ds_celular,ds_senha) VALUES(?,?)") or die($this->res400(1, "Erro interno"));
         $stmt->bind_param("ss",$obj->telefone,$obj->senha) or die($this->res400(2, "Erro interno"));
-        $stmt->execute() or die($stmt->errno == 1062 ? $this->res400(3,"Usuario ja existe") : "");
+        $stmt->execute() or die($stmt->errno == 1062 ? $this->res400(3,"Usuario ja existe") : $this->res400(4,"Erro interno"));
         $idL = $stmt->insert_id;
         $stmt->close();
-        $stmt = $this->conn->prepare("INSERT INTO tb_cliente(nm_cliente,ds_comprovante,cd_login) VALUES(?,?,?)") or die($this->res400(4, "Erro interno"));
-        $stmt->bind_param("ssi",$obj->nome,$obj->comprovante,$idL) or die($this->res400(5, "Erro interno"));
-        $stmt->execute() or die($this->res400(6, "Erro interno"));
+        $stmt = $this->conn->prepare("INSERT INTO tb_cliente(nm_cliente,ds_comprovante,cd_login) VALUES(?,?,?)") or die($this->res400(5, "Erro interno"));
+        $stmt->bind_param("ssi",$obj->nome,$obj->comprovante,$idL) or die($this->res400(6, "Erro interno"));
+        $stmt->execute() or die($this->res400(7, "Erro interno"));
         $stmt->close();
         echo $this->res200(1,"Cadastrado com sucesso",null);
     }

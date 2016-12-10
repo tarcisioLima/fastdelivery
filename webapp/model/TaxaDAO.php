@@ -36,7 +36,7 @@ class TaxaDAO{
     }
     
     public function getMedida(){
-        $st = $this->conn->prepare("SELECT * FROM tb_medida") or die("ERROR ".$conn->error);
+        $st = $this->conn->prepare("SELECT * FROM tb_medida") or die("ERROR2 ".$conn->error);
         $st->execute() or die("2".$st->error);
         $st->bind_result($ds_medida, $vl_medida, $qt_medida, $vl_inicial, $qt_inicial, $ic_medida);
         $box = array();

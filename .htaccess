@@ -3,7 +3,7 @@ RewriteBase /
 
 RewriteCond %{REQUEST_URI} ^/app
 RewriteRule ^app/([A-Za-z]+)/([A-Za-z]+)/?$ app.php?classe=$1&met=$2
-RewriteRule ^app/([A-Za-z]+)/([A-Za-z]+)/([0-9]+)/?$ app.php?classe=$1&met=$2&arg0=$3 [L]
+RewriteRule ^app/([A-Za-z]+)/([A-Za-z]+)/(.*)/?$ app.php?classe=$1&met=$2&arg0=$3 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

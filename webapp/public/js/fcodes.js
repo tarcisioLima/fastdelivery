@@ -9,7 +9,7 @@ $(document).ready(function(){
                         console.log(data);
                         $('#myModal').modal('show');
                     }else{
-                        window.location.href = "/motorista";
+                        window.location.href = "/mapa";
                     }
                 });
              });

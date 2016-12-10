@@ -16,6 +16,8 @@ class Motorista extends DAO implements Usuario{
             $stmt->close();
             $jwt = new Autenticacao($obj->login);
             $jwt->darAcesso($id);
+            $status = new Status();
+            $status->atualizar($id,1);
         } else {
             echo $this->res400(3,"Autenticacao invalida",null);
         }
@@ -23,7 +25,9 @@ class Motorista extends DAO implements Usuario{
     
     public function attDeslogar($id){
         $jwt = new Autenticacao();
-        $jwt->retirarAcesso($id); 
+        $jwt->retirarAcesso($id);
+        $status = new Status();
+        $status->atualizar($id,4);
     }
     
 }
